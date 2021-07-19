@@ -18,5 +18,5 @@ void hmac_sha1(const uint8_t* key,
                const uint32_t keysize,
                const uint8_t* msg,
                const uint32_t msgsize,
-               uint8_t* output);
+                     uint8_t* output);
 ```
