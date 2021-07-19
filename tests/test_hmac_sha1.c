@@ -3,9 +3,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include "sha1.h"
+#include "hmac.h"
 
 
-static void calculate_hmac_sha1(const uint8_t* key, const uint32_t keysize, const uint8_t* msg, const uint32_t msgsize, uint8_t* output);
 static void check_num_args(int argc, char** argv);
 static void check_format_args(char** argv, const uint32_t key_len, const uint32_t msg_len, const uint32_t output_len);
 static void copy_input_args(char** argv, const uint32_t key_len, const uint32_t msg_len, const uint32_t output_len, uint8_t* key, uint8_t* msg, uint8_t* expected);
@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
 
   /* Calculate SHA1 hash of input */
   //calculate_sha1(input_bin, (input_len / 2), digest_bin);
-  calculate_hmac_sha1(key_bin, (key_len / 2), msg_bin, (msg_len / 2), hmac_bin);
+  hmac_sha1(key_bin, (key_len / 2), msg_bin, (msg_len / 2), hmac_bin);
 
   /* Compare HASH(input) to expected-output */
   compare_output_with_expected(hmac_bin, expected_bin);
@@ -63,38 +63,6 @@ int main(int argc, char* argv[])
 
 /* BEGIN STATIC FUNCTIONS: */
 
-
-/* Helper function doing the HMAC-SHA-1 calculation */
-static void calculate_hmac_sha1(const uint8_t* key, const uint32_t keysize, const uint8_t* msg, const uint32_t msgsize, uint8_t* output)
-{
-  struct sha1 outer, inner;
-  uint8_t tmp;
-
-  sha1_reset(&outer);
-  sha1_reset(&inner);
-
-  uint32_t i;
-  for (i = 0; i < keysize; ++i)
-  {
-    tmp = key[i] ^ 0x5C;
-    sha1_input(&outer, &tmp, 1);
-    tmp = key[i] ^ 0x36;
-    sha1_input(&inner, &tmp, 1);
-  }
-  for (; i < 64; ++i)
-  {
-    tmp = 0x5C;
-    sha1_input(&outer, &tmp, 1);
-    tmp = 0x36;
-    sha1_input(&inner, &tmp, 1);
-  }
-
-  sha1_input(&inner, msg, msgsize);
-  sha1_result(&inner, output);
-
-  sha1_input(&outer, output, 20);
-  sha1_result(&outer, output);
-}
 
 
 /* Helper to ensure stdin input format is correct */
