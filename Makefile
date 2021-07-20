@@ -3,14 +3,14 @@ NTHREADS := 4         # number of threads to use => degree of parallelization
 NBYTES   := 128       # number of bytes to hash
 
 CC       := gcc
-CFLAGS   := -Os -I. -Wall -Wextra
+CFLAGS   := -Os -Isrc -Wall -Wextra
 
 
 
 all:
-	@$(CC) $(CFLAGS) -o ./build/test_golden_sha1   sha1.c   ./tests/test_golden_sha1.c
-	@$(CC) $(CFLAGS) -o ./build/test_random_sha1   sha1.c   ./tests/test_stdin_sha1.c
-	@$(CC) $(CFLAGS) -o ./build/test_hmac_sha1     sha1.c   hmac.c ./tests/test_hmac_sha1.c
+	@$(CC) $(CFLAGS) -o ./build/test_golden_sha1   ./src/sha1.c   ./tests/test_golden_sha1.c
+	@$(CC) $(CFLAGS) -o ./build/test_random_sha1   ./src/sha1.c   ./tests/test_stdin_sha1.c
+	@$(CC) $(CFLAGS) -o ./build/test_hmac_sha1     ./src/sha1.c   ./src/hmac.c ./tests/test_hmac_sha1.c
 
 
 test:
