@@ -18,7 +18,7 @@ The API looks like this (I am using C99 `<stdint.h>`-style annotated types):
 /***********************************************************************'
  * HMAC(K,m)      : HMAC SHA1
  * @param key     : secret key
- * @param keysize : key-length ín bytes
+ * @param keysize : key-length in bytes
  * @param msg     : msg to calculate HMAC over
  * @param msgsize : msg-length in bytes
  * @param output  : writeable buffer with at least 20 bytes available
