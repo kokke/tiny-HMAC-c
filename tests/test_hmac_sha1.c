@@ -17,10 +17,11 @@ static void compare_output_with_expected(const uint8_t* actual, const uint8_t* e
  *  Read from STDIN: 
  *  ----------------
  *
- *     argv[1]   input              string in hex-format
- *     argv[2]   expected-output    string in hex format
+ *     argv[1]   key                string in hex-format
+ *     argv[2]   msg                string in hex-format
+ *     argv[3]   expected-output    string in hex format
  *
- *  Convert 'input' to binary and calculate SHA1 hash.
+ *  Convert 'key', 'msg' to binary and calculate HMAC_SHA1(key, msg).
  *
  *  Compare with expected-output and assert equality.
  *
