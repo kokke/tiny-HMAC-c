@@ -6,6 +6,15 @@ void hmac_sha1(const uint8_t* key, const uint32_t keysize, const uint8_t* msg, c
   struct sha1 outer, inner;
   uint8_t tmp;
 
+  if (keysize > HMAC_SHA1_BLOCK_SIZE) // if len(key) > blocksize(sha1) => key = sha1(key)
+  {
+    struct sha1 keyhash;
+    uint8_t new_key[HMAC_SHA1_DIGEST_SIZE];
+    sha1_reset(&keyhash);
+    sha1_input(&keyhash, key, keysize);
+    sha1_result(&keyhash, new_key);
+    return hmac_sha1(new_key, HMAC_SHA1_DIGEST_SIZE, msg, msgsize, output);
+  } 
   sha1_reset(&outer);
   sha1_reset(&inner);
 
@@ -17,7 +26,7 @@ void hmac_sha1(const uint8_t* key, const uint32_t keysize, const uint8_t* msg, c
     tmp = key[i] ^ 0x36;
     sha1_input(&inner, &tmp, 1);
   }
-  for (; i < 64; ++i)
+  for (; i < HMAC_SHA1_BLOCK_SIZE; ++i)
   {
     tmp = 0x5C;
     sha1_input(&outer, &tmp, 1);
@@ -28,7 +37,7 @@ void hmac_sha1(const uint8_t* key, const uint32_t keysize, const uint8_t* msg, c
   sha1_input(&inner, msg, msgsize);
   sha1_result(&inner, output);
 
-  sha1_input(&outer, output, HMAC_SHA1_HASH_SIZE);
+  sha1_input(&outer, output, HMAC_SHA1_DIGEST_SIZE);
   sha1_result(&outer, output);
 }
 

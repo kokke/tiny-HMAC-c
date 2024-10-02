@@ -7,7 +7,10 @@ import subprocess
 import sys
 import time
 import threading
-import Queue
+try:
+    import Queue
+except:
+    import queue as Queue
 
 BIN_PATH = "./build/test_random_sha1"
 
@@ -31,7 +34,7 @@ def random_string(len):
   ret = list()
   rand = random.Random()
 
-  for i in xrange(len):
+  for i in range(len):
     ret.append("%.02x" % rand.randint(0, 255))
 
   return "".join(ret)
@@ -69,7 +72,7 @@ def run_tests():
 def make_test_input():
 
   # Create input and expected output
-  for i in xrange(NTESTS):
+  for i in range(NTESTS):
     test_input = random_string(NBYTES)
     #test_input = bytearray(random.getrandbits(8) for _ in xrange(8))
     sha = hashlib.sha1()

@@ -4,7 +4,8 @@
 #include <stdint.h>
 #include "sha1.h"
 
-#define HMAC_SHA1_HASH_SIZE 20
+#define HMAC_SHA1_DIGEST_SIZE 20
+#define HMAC_SHA1_BLOCK_SIZE  64
 
 /***********************************************************************'
  * HMAC(K,m)      : HMAC SHA1

@@ -9,7 +9,10 @@ import subprocess
 import sys
 import time
 import threading
-import Queue
+try:
+    import Queue
+except:
+    import queue as Queue
 
 BIN_PATH = "./build/test_hmac_sha1"
 
@@ -34,7 +37,7 @@ def random_string(len):
   ret = list()
   rand = random.Random()
 
-  for i in xrange(len):
+  for i in range(len):
     ret.append("%.02x" % rand.randint(0, 255))
 
   return "".join(ret)
@@ -100,10 +103,10 @@ def hmac_sha(key, msg):
 
 def make_test_input():
   # Create input and expected output
-  for i in xrange(NTESTS):
+  for i in range(NTESTS):
     test_key = random_string(NBYTES)
     test_msg = random_string(NBYTES)
-    test_output = hmac_sha(binascii.a2b_hex(test_key), binascii.a2b_hex(test_msg))
+    test_output = hmac_sha_(binascii.a2b_hex(test_key), binascii.a2b_hex(test_msg))
     tests.put([test_key, test_msg, test_output])
 
 

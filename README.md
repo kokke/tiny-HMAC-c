@@ -13,7 +13,8 @@ Description from Wikipedia (emphasis added):
 The API looks like this (I am using C99 `<stdint.h>`-style annotated types):
 
 ```C
-#define HMAC_SHA1_HASH_SIZE 20
+#define HMAC_SHA1_DIGEST_SIZE 20
+#define HMAC_SHA1_BLOCK_SIZE  64
 
 /***********************************************************************'
  * HMAC(K,m)      : HMAC SHA1
