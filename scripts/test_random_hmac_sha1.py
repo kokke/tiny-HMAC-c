@@ -74,39 +74,16 @@ def run_tests():
 
 
 
-def hmac_sha_(key, msg):
+def hmac_sha(key, msg):
   return hmac.new(key, msg, sha1).hexdigest()
 
-
-def hmac_sha(key, msg):
-  block_size = 64
-
-  # instantiate SHA1 objects
-  outer = hashlib.sha1()
-  inner = hashlib.sha1()
-
-  # zero-pad key
-  key = key + chr(0) * (block_size - len(key))
-  #key = "".join([chr(ord(k)) for k in key])
-
-  # Pad inner + outer 
-  key_opad = "".join([chr(ord(k) ^ 0x5C) for k in key])
-  key_ipad = "".join([chr(ord(k) ^ 0x36) for k in key])
-
-  outer.update(key_opad)
-  inner.update(key_ipad)
-  inner.update(msg)
-  outer.update(inner.digest())
-
-  return outer.hexdigest()
-  
 
 def make_test_input():
   # Create input and expected output
   for i in range(NTESTS):
     test_key = random_string(NBYTES)
     test_msg = random_string(NBYTES)
-    test_output = hmac_sha_(binascii.a2b_hex(test_key), binascii.a2b_hex(test_msg))
+    test_output = hmac_sha(binascii.a2b_hex(test_key), binascii.a2b_hex(test_msg))
     tests.put([test_key, test_msg, test_output])
 
 

@@ -8,11 +8,10 @@ void hmac_sha1(const uint8_t* key, const uint32_t keysize, const uint8_t* msg, c
 
   if (keysize > HMAC_SHA1_BLOCK_SIZE) // if len(key) > blocksize(sha1) => key = sha1(key)
   {
-    struct sha1 keyhash;
     uint8_t new_key[HMAC_SHA1_DIGEST_SIZE];
-    sha1_reset(&keyhash);
-    sha1_input(&keyhash, key, keysize);
-    sha1_result(&keyhash, new_key);
+    sha1_reset(&outer);
+    sha1_input(&outer, key, keysize);
+    sha1_result(&outer, new_key);
     return hmac_sha1(new_key, HMAC_SHA1_DIGEST_SIZE, msg, msgsize, output);
   } 
   sha1_reset(&outer);
