@@ -115,7 +115,7 @@ if __name__ == "__main__":
   if NTHREADS > 1:
     str_threads += "s"
   print("Running %d %s calculating HMAC-SHA1 on %d pairs of random %d-byte strings," % (NTHREADS, str_threads, NTESTS, NBYTES))
-  print("comparing the results to the HMAC calculation using Python's hashlib.sha1().")
+  print("comparing the results to the HMAC calculation using Python's hmac module.")
   print("")
 
   t_mk_input = threading.Thread(target=make_test_input)
