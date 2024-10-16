@@ -2,7 +2,9 @@
 
 ### Tiny HMAC in C
 
-This is a small and portable implementation of the [HMAC algorithm](https://en.wikipedia.org/wiki/HMAC) written in C.
+This is a small and portable implementation of the [HMAC algorithm](https://en.wikipedia.org/wiki/HMAC) written in C. 
+
+This implementation only supports the [SHA-1 digest](https://en.wikipedia.org/wiki/SHA-1) currently.
 
 Description from Wikipedia (emphasis added):
 
